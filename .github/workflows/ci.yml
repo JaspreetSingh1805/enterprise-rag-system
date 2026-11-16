@@ -1,0 +1,86 @@
+name: CI/CD Pipeline - Configurable RAG Platform
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  lint-and-test:
+    name: Lint, Test & Evaluate
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Code Quality & Style Check (Ruff)
+        run: |
+          ruff check app tests eval
+          ruff format --check app tests eval
+
+      - name: Generate Sample Enterprise Documents
+        run: |
+          python scripts/generate_sample_docs.py
+
+      - name: Run Automated Test Suite with Coverage
+        run: |
+          pytest --cov=app --cov-report=term-missing --cov-report=xml
+
+      - name: Run 12-Question RAG Evaluation Benchmark
+        run: |
+          python eval/evaluate.py
+
+      - name: Upload Test Coverage
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage.xml
+
+      - name: Upload Evaluation Benchmark Results
+        uses: actions/upload-artifact@v4
+        with:
+          name: evaluation-benchmark
+          path: |
+            eval/results.json
+            eval/results.md
+
+  docker-build:
+    name: Docker Container Build & Verify
+    runs-on: ubuntu-latest
+    needs: lint-and-test
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Docker Image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: false
+          tags: configurable-rag-platform:latest
+          load: true
+
+      - name: Verify Container Health
+        run: |
+          docker run -d --name rag-test-container -p 8000:8000 configurable-rag-platform:latest
+          sleep 5
+          docker logs rag-test-container
+          curl -f http://localhost:8000/api/v1/health || exit 1
+          docker stop rag-test-container

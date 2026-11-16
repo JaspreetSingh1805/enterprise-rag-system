@@ -1,0 +1,376 @@
+{
+  "evaluation_timestamp": "2026-11-16T21:40:00Z",
+  "dataset_size": 12,
+  "configurations": [
+    {
+      "config_name": "Config A (Baseline: Vector-Only)",
+      "mrr": 0.5417,
+      "citation_accuracy_pct": 75.0,
+      "grounding_score_pct": 91.67,
+      "latency_p50_ms": 3.79,
+      "latency_p95_ms": 18.61,
+      "avg_tokens_per_query": 195.7,
+      "total_queries": 12,
+      "detailed_results": [
+        {
+          "id": "q1",
+          "question": "How many days of paid annual leave are permanent employees entitled to, and what is the carry-over limit?",
+          "is_answerable": true,
+          "answer": "Based on the provided documentation: Annual Leave Entitlement\r\nFull-time permanent employees are entitled to 25 business days of paid annual leave per calendar year. [Doc: hr_leave_policy.md, Page: 1, Section: General] - Sick leave cannot be carried over to subsequent years and has zero cash surrender value. [Doc: hr_leave_policy.md, Page: 1, Section: General] Performance reviews are conducted semi-annually in June (Mid-Year Check-in) and December (Annual Review). [Doc: employee_handbook.docx, Page: 1, Section: General]",
+          "is_found": true,
+          "reciprocal_rank": 1.0,
+          "citations": [
+            "hr_leave_policy.md",
+            "employee_handbook.docx"
+          ],
+          "latency_ms": 18.61,
+          "tokens": 303,
+          "grounding_passed": true
+        },
+        {
+          "id": "q2",
+          "question": "Under what condition is a medical certificate required when taking sick leave?",
+          "is_answerable": true,
+          "answer": "Based on the provided documentation: Employee Operations & Code of Conduct Handbook\n\nAll business travel must be pre-approved by the department director at least 10 business days before booking. [Doc: employee_handbook.docx, Page: 1, Section: General] DEVICE ENCRYPTION AND CLEAN DESK POLICY\r\nAll company-issued laptops must have full-disk encryption enabled (BitLocker with XTS-AES 256 or FileVault) prior to connecting to the corporate network. [Doc: security_guidelines.txt, Page: 1, Section: General] Sick & Medical Leave\r\nEmployees receive 12 paid sick leave days annually, granted in full on January 1st of each year. [Doc: hr_leave_policy.md, Page: 1, Section: General]",
+          "is_found": true,
+          "reciprocal_rank": 0.3333333333333333,
+          "citations": [
+            "employee_handbook.docx",
+            "security_guidelines.txt",
+            "hr_leave_policy.md"
+          ],
+          "latency_ms": 4.52,
+          "tokens": 355,
+          "grounding_passed": true
+        },
+        {
+          "id": "q3",
+          "question": "What is the minimum password length and how often must corporate passwords be changed?",
+          "is_answerable": true,
+          "answer": "Based on the provided documentation: PASSWORD REQUIREMENTS AND AUTHENTICATION\r\nAll corporate accounts must utilize passwords with a minimum length of 14 characters, containing at least one uppercase letter, one lowercase letter, one numeric digit, and one special symbol. [Doc: security_guidelines.txt, Page: 1, Section: General] DEVICE ENCRYPTION AND CLEAN DESK POLICY\r\nAll company-issued laptops must have full-disk encryption enabled (BitLocker with XTS-AES 256 or FileVault) prior to connecting to the corporate network. [Doc: security_guidelines.txt, Page: 1, Section: General] SECURITY INCIDENT REPORTING TIMELINE\r\nAny suspected security incident, including lost laptops, phishing email clicks, unauthorized data access, or ransomware indicators, must be reported to the Security Operations Center (SOC) at soc@company. [Doc: security_guidelines.txt, Page: 1, Section: General]",
+          "is_found": true,
+          "reciprocal_rank": 1.0,
+          "citations": [
+            "security_guidelines.txt"
+          ],
+          "latency_ms": 14.93,
+          "tokens": 350,
+          "grounding_passed": true
+        },
+        {
+          "id": "q4",
+          "question": "Within what timeframe must a suspected security incident be reported to the SOC?",
+          "is_answerable": true,
+          "answer": "Based on the provided documentation: SECURITY INCIDENT REPORTING TIMELINE\r\nAny suspected security incident, including lost laptops, phishing email clicks, unauthorized data access, or ransomware indicators, must be reported to the Security Operations Center (SOC) at soc@company. [Doc: security_guidelines.txt, Page: 1, Section: General] Work From Anywhere & Remote Guidelines\r\nEmployees in eligible roles may request up to 30 work-from-anywhere days per calendar year. [Doc: hr_leave_policy.md, Page: 1, Section: General] Refunds can be initiated within 180 days of the original settlement date. [Doc: product_workflow_api.pdf, Page: 1, Section: General]",
+          "is_found": true,
+          "reciprocal_rank": 1.0,
+          "citations": [
+            "security_guidelines.txt",
+            "hr_leave_policy.md",
+            "product_workflow_api.pdf"
+          ],
+          "latency_ms": 7.58,
+          "tokens": 302,
+          "grounding_passed": true
+        },
+        {
+          "id": "q5",
+          "question": "What is the daily meal per diem for employees traveling on business in domestic cities versus international metros?",
+          "is_answerable": true,
+          "answer": "I could not find information about this in the knowledge base.",
+          "is_found": false,
+          "reciprocal_rank": 0.0,
+          "citations": [],
+          "latency_ms": 17.3,
+          "tokens": 11,
+          "grounding_passed": false
+        },
+        {
+          "id": "q6",
+          "question": "What are the core reachable hours for team members in standard operations?",
+          "is_answerable": true,
+          "answer": "Based on the provided documentation: GLOBAL INFORMATION SECURITY & DATA PRIVACY GUIDELINES (v4. [Doc: security_guidelines.txt, Page: 1, Section: General] DEVICE ENCRYPTION AND CLEAN DESK POLICY. [Doc: security_guidelines.txt, Page: 1, Section: General] Standard full-time working hours are 40 hours per week, typically Monday through Friday. [Doc: employee_handbook.docx, Page: 1, Section: General]",
+          "is_found": true,
+          "reciprocal_rank": 0.5,
+          "citations": [
+            "security_guidelines.txt",
+            "employee_handbook.docx"
+          ],
+          "latency_ms": 2.32,
+          "tokens": 153,
+          "grounding_passed": true
+        },
+        {
+          "id": "q7",
+          "question": "What is the expiration time for API JWT tokens and when are payment authorizations settled?",
+          "is_answerable": true,
+          "answer": "Based on the provided documentation: Employee Operations & Code of Conduct Handbook\n\nAll business travel must be pre-approved by the department director at least 10 business days before booking. [Doc: employee_handbook.docx, Page: 1, Section: General] Employee Operations & Code of Conduct Handbook. [Doc: employee_handbook.docx, Page: 1, Section: General] Enterprise Payment Gateway & API Integration Workflow\n1. [Doc: product_workflow_api.pdf, Page: 1, Section: General]",
+          "is_found": true,
+          "reciprocal_rank": 0.5,
+          "citations": [
+            "employee_handbook.docx",
+            "product_workflow_api.pdf"
+          ],
+          "latency_ms": 2.19,
+          "tokens": 253,
+          "grounding_passed": true
+        },
+        {
+          "id": "q8",
+          "question": "What is the standard API rate limit per minute and what status code indicates throttling?",
+          "is_answerable": true,
+          "answer": "Based on the provided documentation: Annual Leave Entitlement\r\nFull-time permanent employees are entitled to 25 business days of paid annual leave per calendar year. [Doc: hr_leave_policy.md, Page: 1, Section: General] Employee Operations & Code of Conduct Handbook\n\nAll business travel must be pre-approved by the department director at least 10 business days before booking. [Doc: employee_handbook.docx, Page: 1, Section: General] Sick & Medical Leave\r\nEmployees receive 12 paid sick leave days annually, granted in full on January 1st of each year. [Doc: hr_leave_policy.md, Page: 1, Section: General]",
+          "is_found": true,
+          "reciprocal_rank": 0.0,
+          "citations": [
+            "hr_leave_policy.md",
+            "employee_handbook.docx"
+          ],
+          "latency_ms": 2.21,
+          "tokens": 356,
+          "grounding_passed": true
+        },
+        {
+          "id": "q9",
+          "question": "What was the total landing payload weight of the NASA Curiosity Mars rover mission?",
+          "is_answerable": false,
+          "answer": "I could not find information about this in the knowledge base.",
+          "is_found": false,
+          "reciprocal_rank": null,
+          "citations": [],
+          "latency_ms": 2.01,
+          "tokens": 11,
+          "grounding_passed": true
+        },
+        {
+          "id": "q10",
+          "question": "What are the internal discount rates and pricing tiers offered by our top competitor Stripe?",
+          "is_answerable": false,
+          "answer": "I could not find information about this in the knowledge base.",
+          "is_found": false,
+          "reciprocal_rank": null,
+          "citations": [],
+          "latency_ms": 3.35,
+          "tokens": 11,
+          "grounding_passed": true
+        },
+        {
+          "id": "q11",
+          "question": "What is the secret recipe and baking temperature for grandmother's chocolate fudge cake?",
+          "is_answerable": false,
+          "answer": "I could not find information about this in the knowledge base.",
+          "is_found": false,
+          "reciprocal_rank": null,
+          "citations": [],
+          "latency_ms": 3.79,
+          "tokens": 232,
+          "grounding_passed": true
+        },
+        {
+          "id": "q12",
+          "question": "What is the current stock price and dividend yield of Apple Inc on the NASDAQ exchange?",
+          "is_answerable": false,
+          "answer": "I could not find information about this in the knowledge base.",
+          "is_found": false,
+          "reciprocal_rank": null,
+          "citations": [],
+          "latency_ms": 3.15,
+          "tokens": 11,
+          "grounding_passed": true
+        }
+      ]
+    },
+    {
+      "config_name": "Config B (Enhanced: Hybrid + Rerank + Rewrite)",
+      "mrr": 1.0,
+      "citation_accuracy_pct": 100.0,
+      "grounding_score_pct": 91.67,
+      "latency_p50_ms": 5.13,
+      "latency_p95_ms": 8.75,
+      "avg_tokens_per_query": 513.9,
+      "total_queries": 12,
+      "detailed_results": [
+        {
+          "id": "q1",
+          "question": "How many days of paid annual leave are permanent employees entitled to, and what is the carry-over limit?",
+          "is_answerable": true,
+          "answer": "Based on the provided documentation: Annual Leave Entitlement]\nFull-time permanent employees are entitled to 25 business days of paid annual leave per calendar year. [Doc: hr_leave_policy.md, Page: 1, Section: 1. Annual Leave Entitlement] Sick & Medical Leave]\nEmployees receive 12 paid sick leave days annually, granted in full on January 1st of each year. [Doc: hr_leave_policy.md, Page: 1, Section: 2. Sick & Medical Leave] Parental & Adoption Leave]\nPrimary caregivers are eligible for 16 weeks of fully paid parental leave following the birth or legal adoption of a child. [Doc: hr_leave_policy.md, Page: 1, Section: 3. Parental & Adoption Leave]",
+          "is_found": true,
+          "reciprocal_rank": 1.0,
+          "citations": [
+            "hr_leave_policy.md",
+            "hr_leave_policy.md",
+            "hr_leave_policy.md"
+          ],
+          "latency_ms": 8.75,
+          "tokens": 359,
+          "grounding_passed": true
+        },
+        {
+          "id": "q2",
+          "question": "Under what condition is a medical certificate required when taking sick leave?",
+          "is_answerable": true,
+          "answer": "Based on the provided documentation: Sick & Medical Leave]\nEmployees receive 12 paid sick leave days annually, granted in full on January 1st of each year. [Doc: hr_leave_policy.md, Page: 1, Section: 2. Sick & Medical Leave] Annual Leave Entitlement]\nFull-time permanent employees are entitled to 25 business days of paid annual leave per calendar year. [Doc: hr_leave_policy.md, Page: 1, Section: 1. Annual Leave Entitlement] [Paragraph 1]\nGLOBAL INFORMATION SECURITY & DATA PRIVACY GUIDELINES (v4. [Doc: security_guidelines.txt, Page: 1, Section: Paragraph 1]",
+          "is_found": true,
+          "reciprocal_rank": 1.0,
+          "citations": [
+            "hr_leave_policy.md",
+            "hr_leave_policy.md",
+            "security_guidelines.txt"
+          ],
+          "latency_ms": 5.61,
+          "tokens": 530,
+          "grounding_passed": true
+        },
+        {
+          "id": "q3",
+          "question": "What is the minimum password length and how often must corporate passwords be changed?",
+          "is_answerable": true,
+          "answer": "Based on the provided documentation: [Paragraph 1]\nGLOBAL INFORMATION SECURITY & DATA PRIVACY GUIDELINES (v4. [Doc: security_guidelines.txt, Page: 1, Section: Paragraph 1] Enterprise Payment Gateway & API Integration Workflow\n1. [Doc: product_workflow_api.pdf, Page: 1, Section: Paragraph 1] Business Travel and Expense Reimbursements]\nAll business travel must be pre-approved by the department director at least 10 business days before booking. [Doc: employee_handbook.docx, Page: 1, Section: 1. Business Travel and Expense Reimbursements]",
+          "is_found": true,
+          "reciprocal_rank": 1.0,
+          "citations": [
+            "security_guidelines.txt",
+            "product_workflow_api.pdf",
+            "employee_handbook.docx"
+          ],
+          "latency_ms": 4.57,
+          "tokens": 600,
+          "grounding_passed": true
+        },
+        {
+          "id": "q4",
+          "question": "Within what timeframe must a suspected security incident be reported to the SOC?",
+          "is_answerable": true,
+          "answer": "Based on the provided documentation: [Paragraph 1]\nGLOBAL INFORMATION SECURITY & DATA PRIVACY GUIDELINES (v4. [Doc: security_guidelines.txt, Page: 1, Section: Paragraph 1] Enterprise Payment Gateway & API Integration Workflow\n1. [Doc: product_workflow_api.pdf, Page: 1, Section: Paragraph 1] Business Travel and Expense Reimbursements]\nAll business travel must be pre-approved by the department director at least 10 business days before booking. [Doc: employee_handbook.docx, Page: 1, Section: 1. Business Travel and Expense Reimbursements]",
+          "is_found": true,
+          "reciprocal_rank": 1.0,
+          "citations": [
+            "security_guidelines.txt",
+            "product_workflow_api.pdf",
+            "employee_handbook.docx"
+          ],
+          "latency_ms": 5.13,
+          "tokens": 599,
+          "grounding_passed": true
+        },
+        {
+          "id": "q5",
+          "question": "What is the daily meal per diem for employees traveling on business in domestic cities versus international metros?",
+          "is_answerable": true,
+          "answer": "Based on the provided documentation: Business Travel and Expense Reimbursements]\nAll business travel must be pre-approved by the department director at least 10 business days before booking. [Doc: employee_handbook.docx, Page: 1, Section: 1. Business Travel and Expense Reimbursements] Annual Leave Entitlement]\nFull-time permanent employees are entitled to 25 business days of paid annual leave per calendar year. [Doc: hr_leave_policy.md, Page: 1, Section: 1. Annual Leave Entitlement] Enterprise Payment Gateway & API Integration Workflow\n1. [Doc: product_workflow_api.pdf, Page: 1, Section: Paragraph 1]",
+          "is_found": true,
+          "reciprocal_rank": 1.0,
+          "citations": [
+            "employee_handbook.docx",
+            "hr_leave_policy.md",
+            "product_workflow_api.pdf"
+          ],
+          "latency_ms": 4.9,
+          "tokens": 431,
+          "grounding_passed": true
+        },
+        {
+          "id": "q6",
+          "question": "What are the core reachable hours for team members in standard operations?",
+          "is_answerable": true,
+          "answer": "Based on the provided documentation: Working Hours and Flexible Schedules]\nStandard full-time working hours are 40 hours per week, typically Monday through Friday. [Doc: employee_handbook.docx, Page: 1, Section: 2. Working Hours and Flexible Schedules] Enterprise Payment Gateway & API Integration Workflow\n1. [Doc: product_workflow_api.pdf, Page: 1, Section: Paragraph 1] Business Travel and Expense Reimbursements]\nAll business travel must be pre-approved by the department director at least 10 business days before booking. [Doc: employee_handbook.docx, Page: 1, Section: 1. Business Travel and Expense Reimbursements]",
+          "is_found": true,
+          "reciprocal_rank": 1.0,
+          "citations": [
+            "employee_handbook.docx",
+            "product_workflow_api.pdf",
+            "employee_handbook.docx"
+          ],
+          "latency_ms": 4.32,
+          "tokens": 419,
+          "grounding_passed": true
+        },
+        {
+          "id": "q7",
+          "question": "What is the expiration time for API JWT tokens and when are payment authorizations settled?",
+          "is_answerable": true,
+          "answer": "Based on the provided documentation: Enterprise Payment Gateway & API Integration Workflow\n1. [Doc: product_workflow_api.pdf, Page: 1, Section: Paragraph 1] [Paragraph 1]\nGLOBAL INFORMATION SECURITY & DATA PRIVACY GUIDELINES (v4. [Doc: security_guidelines.txt, Page: 1, Section: Paragraph 1] Working Hours and Flexible Schedules]\nStandard full-time working hours are 40 hours per week, typically Monday through Friday. [Doc: employee_handbook.docx, Page: 1, Section: 2. Working Hours and Flexible Schedules]",
+          "is_found": true,
+          "reciprocal_rank": 1.0,
+          "citations": [
+            "product_workflow_api.pdf",
+            "security_guidelines.txt",
+            "employee_handbook.docx"
+          ],
+          "latency_ms": 4.73,
+          "tokens": 570,
+          "grounding_passed": true
+        },
+        {
+          "id": "q8",
+          "question": "What is the standard API rate limit per minute and what status code indicates throttling?",
+          "is_answerable": true,
+          "answer": "Based on the provided documentation: Enterprise Payment Gateway & API Integration Workflow\n1. [Doc: product_workflow_api.pdf, Page: 1, Section: Paragraph 1] [Paragraph 1]\nGLOBAL INFORMATION SECURITY & DATA PRIVACY GUIDELINES (v4. [Doc: security_guidelines.txt, Page: 1, Section: Paragraph 1] Performance Evaluation & Compensation Review]\nPerformance reviews are conducted semi-annually in June (Mid-Year Check-in) and December (Annual Review). [Doc: employee_handbook.docx, Page: 1, Section: 3. Performance Evaluation & Compensation Review]",
+          "is_found": true,
+          "reciprocal_rank": 1.0,
+          "citations": [
+            "product_workflow_api.pdf",
+            "security_guidelines.txt",
+            "employee_handbook.docx"
+          ],
+          "latency_ms": 5.49,
+          "tokens": 559,
+          "grounding_passed": true
+        },
+        {
+          "id": "q9",
+          "question": "What was the total landing payload weight of the NASA Curiosity Mars rover mission?",
+          "is_answerable": false,
+          "answer": "I could not find information about this in the knowledge base.",
+          "is_found": false,
+          "reciprocal_rank": null,
+          "citations": [],
+          "latency_ms": 4.65,
+          "tokens": 510,
+          "grounding_passed": true
+        },
+        {
+          "id": "q10",
+          "question": "What are the internal discount rates and pricing tiers offered by our top competitor Stripe?",
+          "is_answerable": false,
+          "answer": "I could not find information about this in the knowledge base.",
+          "is_found": false,
+          "reciprocal_rank": null,
+          "citations": [],
+          "latency_ms": 4.79,
+          "tokens": 504,
+          "grounding_passed": true
+        },
+        {
+          "id": "q11",
+          "question": "What is the secret recipe and baking temperature for grandmother's chocolate fudge cake?",
+          "is_answerable": false,
+          "answer": "I could not find information about this in the knowledge base.",
+          "is_found": false,
+          "reciprocal_rank": null,
+          "citations": [],
+          "latency_ms": 5.57,
+          "tokens": 509,
+          "grounding_passed": true
+        },
+        {
+          "id": "q12",
+          "question": "What is the current stock price and dividend yield of Apple Inc on the NASDAQ exchange?",
+          "is_answerable": false,
+          "answer": "Based on the provided documentation: [Paragraph 1]\nGLOBAL INFORMATION SECURITY & DATA PRIVACY GUIDELINES (v4. [Doc: security_guidelines.txt, Page: 1, Section: Paragraph 1] Enterprise Payment Gateway & API Integration Workflow\n1. [Doc: product_workflow_api.pdf, Page: 1, Section: Paragraph 1] Annual Leave Entitlement]\nFull-time permanent employees are entitled to 25 business days of paid annual leave per calendar year. [Doc: hr_leave_policy.md, Page: 1, Section: 1. Annual Leave Entitlement]",
+          "is_found": true,
+          "reciprocal_rank": null,
+          "citations": [
+            "security_guidelines.txt",
+            "product_workflow_api.pdf",
+            "hr_leave_policy.md"
+          ],
+          "latency_ms": 5.29,
+          "tokens": 577,
+          "grounding_passed": false
+        }
+      ]
+    }
+  ]
+}

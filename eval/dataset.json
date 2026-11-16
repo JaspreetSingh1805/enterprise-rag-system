@@ -1,0 +1,86 @@
+[
+  {
+    "id": "q1",
+    "question": "How many days of paid annual leave are permanent employees entitled to, and what is the carry-over limit?",
+    "is_answerable": true,
+    "expected_doc_name": "hr_leave_policy.md",
+    "ground_truth_keywords": ["25", "annual leave", "5", "march 31st"]
+  },
+  {
+    "id": "q2",
+    "question": "Under what condition is a medical certificate required when taking sick leave?",
+    "is_answerable": true,
+    "expected_doc_name": "hr_leave_policy.md",
+    "ground_truth_keywords": ["consecutive", "2", "business days", "medical certificate"]
+  },
+  {
+    "id": "q3",
+    "question": "What is the minimum password length and how often must corporate passwords be changed?",
+    "is_answerable": true,
+    "expected_doc_name": "security_guidelines.txt",
+    "ground_truth_keywords": ["14", "characters", "90 days"]
+  },
+  {
+    "id": "q4",
+    "question": "Within what timeframe must a suspected security incident be reported to the SOC?",
+    "is_answerable": true,
+    "expected_doc_name": "security_guidelines.txt",
+    "ground_truth_keywords": ["60 minutes", "soc", "security operations center"]
+  },
+  {
+    "id": "q5",
+    "question": "What is the daily meal per diem for employees traveling on business in domestic cities versus international metros?",
+    "is_answerable": true,
+    "expected_doc_name": "employee_handbook.docx",
+    "ground_truth_keywords": ["$75", "$110", "per diem", "domestic"]
+  },
+  {
+    "id": "q6",
+    "question": "What are the core reachable hours for team members in standard operations?",
+    "is_answerable": true,
+    "expected_doc_name": "employee_handbook.docx",
+    "ground_truth_keywords": ["10:00 AM", "3:30 PM", "core hours"]
+  },
+  {
+    "id": "q7",
+    "question": "What is the expiration time for API JWT tokens and when are payment authorizations settled?",
+    "is_answerable": true,
+    "expected_doc_name": "product_workflow_api.pdf",
+    "ground_truth_keywords": ["3600 seconds", "1 hour", "23:59 UTC", "settlement"]
+  },
+  {
+    "id": "q8",
+    "question": "What is the standard API rate limit per minute and what status code indicates throttling?",
+    "is_answerable": true,
+    "expected_doc_name": "product_workflow_api.pdf",
+    "ground_truth_keywords": ["1200", "requests per minute", "429"]
+  },
+  {
+    "id": "q9",
+    "question": "What was the total landing payload weight of the NASA Curiosity Mars rover mission?",
+    "is_answerable": false,
+    "expected_doc_name": null,
+    "ground_truth_keywords": []
+  },
+  {
+    "id": "q10",
+    "question": "What are the internal discount rates and pricing tiers offered by our top competitor Stripe?",
+    "is_answerable": false,
+    "expected_doc_name": null,
+    "ground_truth_keywords": []
+  },
+  {
+    "id": "q11",
+    "question": "What is the secret recipe and baking temperature for grandmother's chocolate fudge cake?",
+    "is_answerable": false,
+    "expected_doc_name": null,
+    "ground_truth_keywords": []
+  },
+  {
+    "id": "q12",
+    "question": "What is the current stock price and dividend yield of Apple Inc on the NASDAQ exchange?",
+    "is_answerable": false,
+    "expected_doc_name": null,
+    "ground_truth_keywords": []
+  }
+]

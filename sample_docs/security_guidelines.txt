@@ -1,0 +1,13 @@
+GLOBAL INFORMATION SECURITY & DATA PRIVACY GUIDELINES (v4.2)
+
+1. PASSWORD REQUIREMENTS AND AUTHENTICATION
+All corporate accounts must utilize passwords with a minimum length of 14 characters, containing at least one uppercase letter, one lowercase letter, one numeric digit, and one special symbol. Passwords expire every 90 days and cannot match the previous 12 passwords used. Multi-Factor Authentication (MFA) via hardware security key or corporate authenticator app is mandatory for all internal services, VPN gateways, and cloud applications. SMS-based 2FA is strictly prohibited for privileged access.
+
+2. DEVICE ENCRYPTION AND CLEAN DESK POLICY
+All company-issued laptops must have full-disk encryption enabled (BitLocker with XTS-AES 256 or FileVault) prior to connecting to the corporate network. Removable USB flash drives and unauthorized external storage devices are blocked by endpoint management agents. Employees must lock their workstation screens whenever stepping away. Physical documents containing customer Personal Identifiable Information (PII) or confidential intellectual property must be locked inside desk drawers when unattended.
+
+3. SECURITY INCIDENT REPORTING TIMELINE
+Any suspected security incident, including lost laptops, phishing email clicks, unauthorized data access, or ransomware indicators, must be reported to the Security Operations Center (SOC) at soc@company.internal within 60 minutes of detection. High-severity incidents are escalated to the Incident Response Team with a guaranteed 15-minute containment SLA.
+
+4. REMOTE ACCESS AND VPN POLICIES
+Remote network access is permitted only via the corporate WireGuard/IPsec zero-trust network access (ZTNA) tunnel. Split-tunneling is strictly disabled. Public open Wi-Fi networks (such as cafes, airports, and hotels) must only be used while connected to the full corporate VPN.
