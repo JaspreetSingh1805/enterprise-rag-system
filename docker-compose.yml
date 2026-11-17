@@ -9,7 +9,7 @@ services:
     volumes:
       - qdrant_storage:/qdrant/storage
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:6333/healthz"]
+      test: ["CMD-SHELL", "bash -c '</dev/tcp/localhost/6333' || exit 1"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -21,7 +21,7 @@ services:
     container_name: rag-api
     restart: unless-stopped
     ports:
-      - "8000:8000"
+      - "${RAG_PORT:-8080}:8000"
     environment:
       - APP_ENV=production
       - APP_HOST=0.0.0.0
