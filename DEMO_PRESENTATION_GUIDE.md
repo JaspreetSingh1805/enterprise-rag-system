@@ -204,9 +204,14 @@ curl -s http://localhost:8080/api/v1/health
 > *"To rigorously prove retrieval quality, I built an automated evaluation suite testing 12 representative questions across Config A (Baseline Vector) and Config B (Enhanced Hybrid + Reranking)."*
 
 **What to Run**:
-```bash
-.\.venv\Scripts\python.exe eval/evaluate.py
-```
+- In **Git Bash**:
+  ```bash
+  ./.venv/Scripts/python.exe eval/evaluate.py
+  ```
+- Or in **PowerShell**:
+  ```powershell
+  .\.venv\Scripts\python.exe eval/evaluate.py
+  ```
 
 **Show the Interviewer the Comparison Matrix**:
 
@@ -314,6 +319,7 @@ curl -s http://localhost:8080/api/v1/health
 
 ## 5. Cheat Sheet: Useful Commands During the Demo
 
+### For Git Bash (MINGW64):
 ```bash
 # 1. Check Container Status
 docker compose ps
@@ -321,16 +327,33 @@ docker compose ps
 # 2. Check Health & Active Config
 curl -s http://localhost:8080/api/v1/health
 
-# 3. Run Automated 34-Test Pytest Suite
-.\.venv\Scripts\python.exe -m pytest
+# 3. Run Automated 34-Test Pytest Suite (via Docker or Virtualenv)
+docker compose exec rag-api pytest
+# OR
+./.venv/Scripts/python.exe -m pytest
 
 # 4. Run Evaluation Benchmark (Config A vs Config B)
-.\.venv\Scripts\python.exe eval/evaluate.py
+./.venv/Scripts/python.exe eval/evaluate.py
 
-# 5. Run the 10-Second Interactive Demo Script
-.\.venv\Scripts\python.exe scripts/demo.py
+# 5. Run the Interactive Demo Script
+./.venv/Scripts/python.exe scripts/demo.py
 
 # 6. Check Container Logs
 docker logs rag-api
 docker logs rag-qdrant
+```
+
+### For Windows PowerShell:
+```powershell
+# Run Tests in Container
+docker compose exec rag-api pytest
+
+# Run Tests locally
+.\.venv\Scripts\python.exe -m pytest
+
+# Run Evaluation Benchmark
+.\.venv\Scripts\python.exe eval/evaluate.py
+
+# Run Demo Script
+.\.venv\Scripts\python.exe scripts/demo.py
 ```
