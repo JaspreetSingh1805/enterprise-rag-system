@@ -4,6 +4,7 @@ import threading
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Optional
+
 from app.core.exceptions import (
     ConfigurationError,
     KnowledgeBaseAlreadyExistsError,
@@ -184,7 +185,9 @@ class MetadataStore:
                 for r in rows
             ]
 
-    def update_kb(self, kb_id: str, name: Optional[str] = None, description: Optional[str] = None) -> KnowledgeBase:
+    def update_kb(
+        self, kb_id: str, name: Optional[str] = None, description: Optional[str] = None
+    ) -> KnowledgeBase:
         kb = self.get_kb(kb_id)
         if not kb:
             raise KnowledgeBaseNotFoundError(kb_id)
@@ -192,13 +195,21 @@ class MetadataStore:
         now = datetime.now(timezone.utc).isoformat()
         with self._lock, self._get_connection() as conn:
             if name is not None:
-                conn.execute("UPDATE knowledge_bases SET name = ?, updated_at = ? WHERE id = ?", (name, now, kb_id))
+                conn.execute(
+                    "UPDATE knowledge_bases SET name = ?, updated_at = ? WHERE id = ?",
+                    (name, now, kb_id),
+                )
             if description is not None:
-                conn.execute("UPDATE knowledge_bases SET description = ?, updated_at = ? WHERE id = ?", (description, now, kb_id))
+                conn.execute(
+                    "UPDATE knowledge_bases SET description = ?, updated_at = ? WHERE id = ?",
+                    (description, now, kb_id),
+                )
 
         return self.get_kb(kb_id)  # type: ignore
 
-    def update_kb_embedding(self, kb_id: str, embedding_model: str, embedding_dimension: int) -> None:
+    def update_kb_embedding(
+        self, kb_id: str, embedding_model: str, embedding_dimension: int
+    ) -> None:
         now = datetime.now(timezone.utc).isoformat()
         with self._lock, self._get_connection() as conn:
             conn.execute(
@@ -216,8 +227,12 @@ class MetadataStore:
 
     def refresh_kb_counts(self, kb_id: str) -> None:
         with self._lock, self._get_connection() as conn:
-            doc_cnt = conn.execute("SELECT COUNT(*) FROM documents WHERE knowledge_base_id = ?", (kb_id,)).fetchone()[0]
-            chunk_cnt = conn.execute("SELECT COUNT(*) FROM chunks WHERE knowledge_base_id = ?", (kb_id,)).fetchone()[0]
+            doc_cnt = conn.execute(
+                "SELECT COUNT(*) FROM documents WHERE knowledge_base_id = ?", (kb_id,)
+            ).fetchone()[0]
+            chunk_cnt = conn.execute(
+                "SELECT COUNT(*) FROM chunks WHERE knowledge_base_id = ?", (kb_id,)
+            ).fetchone()[0]
             conn.execute(
                 "UPDATE knowledge_bases SET document_count = ?, chunk_count = ? WHERE id = ?",
                 (doc_cnt, chunk_cnt, kb_id),
@@ -364,7 +379,9 @@ class MetadataStore:
 
     def get_chunks_for_doc(self, doc_id: str) -> list[Chunk]:
         with self._lock, self._get_connection() as conn:
-            cur = conn.execute("SELECT * FROM chunks WHERE document_id = ? ORDER BY chunk_index ASC", (doc_id,))
+            cur = conn.execute(
+                "SELECT * FROM chunks WHERE document_id = ? ORDER BY chunk_index ASC", (doc_id,)
+            )
             rows = cur.fetchall()
             return [
                 Chunk(
@@ -382,7 +399,10 @@ class MetadataStore:
 
     def get_all_chunks_for_kb(self, kb_id: str) -> list[Chunk]:
         with self._lock, self._get_connection() as conn:
-            cur = conn.execute("SELECT * FROM chunks WHERE knowledge_base_id = ? ORDER BY chunk_index ASC", (kb_id,))
+            cur = conn.execute(
+                "SELECT * FROM chunks WHERE knowledge_base_id = ? ORDER BY chunk_index ASC",
+                (kb_id,),
+            )
             rows = cur.fetchall()
             return [
                 Chunk(
@@ -423,7 +443,9 @@ class MetadataStore:
 
     def get_config(self, version: str) -> Optional[PipelineConfig]:
         with self._lock, self._get_connection() as conn:
-            cur = conn.execute("SELECT config_json FROM pipeline_configs WHERE version = ?", (version,))
+            cur = conn.execute(
+                "SELECT config_json FROM pipeline_configs WHERE version = ?", (version,)
+            )
             row = cur.fetchone()
             if not row:
                 return None
@@ -458,7 +480,9 @@ class MetadataStore:
                 return PipelineConfig.model_validate_json(row["config_json"])
 
             # Fallback to latest
-            cur2 = conn.execute("SELECT config_json FROM pipeline_configs ORDER BY created_at DESC LIMIT 1")
+            cur2 = conn.execute(
+                "SELECT config_json FROM pipeline_configs ORDER BY created_at DESC LIMIT 1"
+            )
             row2 = cur2.fetchone()
             if row2:
                 cfg = PipelineConfig.model_validate_json(row2["config_json"])
@@ -568,7 +592,9 @@ class MetadataStore:
                 progress_percent=row["progress_percent"],
                 created_at=datetime.fromisoformat(row["created_at"]),
                 started_at=datetime.fromisoformat(row["started_at"]) if row["started_at"] else None,
-                completed_at=datetime.fromisoformat(row["completed_at"]) if row["completed_at"] else None,
+                completed_at=datetime.fromisoformat(row["completed_at"])
+                if row["completed_at"]
+                else None,
                 error_message=row["error_message"],
                 config_version=row["config_version"],
                 details=json.loads(row["details_json"]),
@@ -577,7 +603,10 @@ class MetadataStore:
     def list_jobs(self, kb_id: Optional[str] = None) -> list[Job]:
         with self._lock, self._get_connection() as conn:
             if kb_id:
-                cur = conn.execute("SELECT * FROM jobs WHERE knowledge_base_id = ? ORDER BY created_at DESC", (kb_id,))
+                cur = conn.execute(
+                    "SELECT * FROM jobs WHERE knowledge_base_id = ? ORDER BY created_at DESC",
+                    (kb_id,),
+                )
             else:
                 cur = conn.execute("SELECT * FROM jobs ORDER BY created_at DESC")
             rows = cur.fetchall()
@@ -590,7 +619,9 @@ class MetadataStore:
                     progress_percent=r["progress_percent"],
                     created_at=datetime.fromisoformat(r["created_at"]),
                     started_at=datetime.fromisoformat(r["started_at"]) if r["started_at"] else None,
-                    completed_at=datetime.fromisoformat(r["completed_at"]) if r["completed_at"] else None,
+                    completed_at=datetime.fromisoformat(r["completed_at"])
+                    if r["completed_at"]
+                    else None,
                     error_message=r["error_message"],
                     config_version=r["config_version"],
                     details=json.loads(r["details_json"]),
