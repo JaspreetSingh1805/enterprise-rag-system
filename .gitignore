@@ -43,7 +43,7 @@ Thumbs.db
 
 # App data & Vector Store
 data/
-storage/
+/storage/
 qdrant_storage/
 *.db
 *.sqlite

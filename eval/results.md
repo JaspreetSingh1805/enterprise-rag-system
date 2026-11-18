@@ -17,8 +17,8 @@ This benchmark evaluates the enterprise RAG platform across two distinct configu
 | **Citation Accuracy** | **75.0%** | **100.0%** | **+25.0%** |
 | **Grounding Score** | **91.7%** | **91.7%** | **+0.0%** |
 | **Unanswerable Rejection Rate** | **100.0%** | **100.0%** | **0.0% (Perfect Rejection)** |
-| **Latency (p50)** | **3.79 ms** | **5.13 ms** | **+1.3 ms** |
-| **Latency (p95)** | **18.61 ms** | **8.75 ms** | **-9.9 ms** |
+| **Latency (p50)** | **2.87 ms** | **4.22 ms** | **+1.3 ms** |
+| **Latency (p95)** | **12.8 ms** | **37.27 ms** | **+24.5 ms** |
 | **Average Tokens / Query** | **195.7** | **513.9** | **+318.2 tokens** |
 
 ---

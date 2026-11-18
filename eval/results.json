@@ -7,8 +7,8 @@
       "mrr": 0.5417,
       "citation_accuracy_pct": 75.0,
       "grounding_score_pct": 91.67,
-      "latency_p50_ms": 3.79,
-      "latency_p95_ms": 18.61,
+      "latency_p50_ms": 2.87,
+      "latency_p95_ms": 12.8,
       "avg_tokens_per_query": 195.7,
       "total_queries": 12,
       "detailed_results": [
@@ -23,7 +23,7 @@
             "hr_leave_policy.md",
             "employee_handbook.docx"
           ],
-          "latency_ms": 18.61,
+          "latency_ms": 12.8,
           "tokens": 303,
           "grounding_passed": true
         },
@@ -39,7 +39,7 @@
             "security_guidelines.txt",
             "hr_leave_policy.md"
           ],
-          "latency_ms": 4.52,
+          "latency_ms": 2.96,
           "tokens": 355,
           "grounding_passed": true
         },
@@ -53,7 +53,7 @@
           "citations": [
             "security_guidelines.txt"
           ],
-          "latency_ms": 14.93,
+          "latency_ms": 2.44,
           "tokens": 350,
           "grounding_passed": true
         },
@@ -69,7 +69,7 @@
             "hr_leave_policy.md",
             "product_workflow_api.pdf"
           ],
-          "latency_ms": 7.58,
+          "latency_ms": 2.16,
           "tokens": 302,
           "grounding_passed": true
         },
@@ -81,7 +81,7 @@
           "is_found": false,
           "reciprocal_rank": 0.0,
           "citations": [],
-          "latency_ms": 17.3,
+          "latency_ms": 1.94,
           "tokens": 11,
           "grounding_passed": false
         },
@@ -96,7 +96,7 @@
             "security_guidelines.txt",
             "employee_handbook.docx"
           ],
-          "latency_ms": 2.32,
+          "latency_ms": 2.05,
           "tokens": 153,
           "grounding_passed": true
         },
@@ -111,7 +111,7 @@
             "employee_handbook.docx",
             "product_workflow_api.pdf"
           ],
-          "latency_ms": 2.19,
+          "latency_ms": 2.13,
           "tokens": 253,
           "grounding_passed": true
         },
@@ -126,7 +126,7 @@
             "hr_leave_policy.md",
             "employee_handbook.docx"
           ],
-          "latency_ms": 2.21,
+          "latency_ms": 2.08,
           "tokens": 356,
           "grounding_passed": true
         },
@@ -138,7 +138,7 @@
           "is_found": false,
           "reciprocal_rank": null,
           "citations": [],
-          "latency_ms": 2.01,
+          "latency_ms": 6.34,
           "tokens": 11,
           "grounding_passed": true
         },
@@ -150,7 +150,7 @@
           "is_found": false,
           "reciprocal_rank": null,
           "citations": [],
-          "latency_ms": 3.35,
+          "latency_ms": 3.08,
           "tokens": 11,
           "grounding_passed": true
         },
@@ -162,7 +162,7 @@
           "is_found": false,
           "reciprocal_rank": null,
           "citations": [],
-          "latency_ms": 3.79,
+          "latency_ms": 2.94,
           "tokens": 232,
           "grounding_passed": true
         },
@@ -174,7 +174,7 @@
           "is_found": false,
           "reciprocal_rank": null,
           "citations": [],
-          "latency_ms": 3.15,
+          "latency_ms": 2.87,
           "tokens": 11,
           "grounding_passed": true
         }
@@ -185,8 +185,8 @@
       "mrr": 1.0,
       "citation_accuracy_pct": 100.0,
       "grounding_score_pct": 91.67,
-      "latency_p50_ms": 5.13,
-      "latency_p95_ms": 8.75,
+      "latency_p50_ms": 4.22,
+      "latency_p95_ms": 37.27,
       "avg_tokens_per_query": 513.9,
       "total_queries": 12,
       "detailed_results": [
@@ -202,7 +202,7 @@
             "hr_leave_policy.md",
             "hr_leave_policy.md"
           ],
-          "latency_ms": 8.75,
+          "latency_ms": 37.27,
           "tokens": 359,
           "grounding_passed": true
         },
@@ -218,7 +218,7 @@
             "hr_leave_policy.md",
             "security_guidelines.txt"
           ],
-          "latency_ms": 5.61,
+          "latency_ms": 4.55,
           "tokens": 530,
           "grounding_passed": true
         },
@@ -234,7 +234,7 @@
             "product_workflow_api.pdf",
             "employee_handbook.docx"
           ],
-          "latency_ms": 4.57,
+          "latency_ms": 4.92,
           "tokens": 600,
           "grounding_passed": true
         },
@@ -250,7 +250,7 @@
             "product_workflow_api.pdf",
             "employee_handbook.docx"
           ],
-          "latency_ms": 5.13,
+          "latency_ms": 4.37,
           "tokens": 599,
           "grounding_passed": true
         },
@@ -266,7 +266,7 @@
             "hr_leave_policy.md",
             "product_workflow_api.pdf"
           ],
-          "latency_ms": 4.9,
+          "latency_ms": 3.48,
           "tokens": 431,
           "grounding_passed": true
         },
@@ -282,7 +282,7 @@
             "product_workflow_api.pdf",
             "employee_handbook.docx"
           ],
-          "latency_ms": 4.32,
+          "latency_ms": 3.36,
           "tokens": 419,
           "grounding_passed": true
         },
@@ -298,7 +298,7 @@
             "security_guidelines.txt",
             "employee_handbook.docx"
           ],
-          "latency_ms": 4.73,
+          "latency_ms": 3.39,
           "tokens": 570,
           "grounding_passed": true
         },
@@ -314,7 +314,7 @@
             "security_guidelines.txt",
             "employee_handbook.docx"
           ],
-          "latency_ms": 5.49,
+          "latency_ms": 3.64,
           "tokens": 559,
           "grounding_passed": true
         },
@@ -326,7 +326,7 @@
           "is_found": false,
           "reciprocal_rank": null,
           "citations": [],
-          "latency_ms": 4.65,
+          "latency_ms": 5.01,
           "tokens": 510,
           "grounding_passed": true
         },
@@ -338,7 +338,7 @@
           "is_found": false,
           "reciprocal_rank": null,
           "citations": [],
-          "latency_ms": 4.79,
+          "latency_ms": 3.99,
           "tokens": 504,
           "grounding_passed": true
         },
@@ -350,7 +350,7 @@
           "is_found": false,
           "reciprocal_rank": null,
           "citations": [],
-          "latency_ms": 5.57,
+          "latency_ms": 4.01,
           "tokens": 509,
           "grounding_passed": true
         },
@@ -366,7 +366,7 @@
             "product_workflow_api.pdf",
             "hr_leave_policy.md"
           ],
-          "latency_ms": 5.29,
+          "latency_ms": 4.22,
           "tokens": 577,
           "grounding_passed": false
         }
