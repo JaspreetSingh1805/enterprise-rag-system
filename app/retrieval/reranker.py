@@ -38,14 +38,14 @@ class Reranker:
         if self._flashrank_client:
             from flashrank import RerankRequest
 
-            passages = [{"id": c.id, "text": c.text, "chunk": c} for c, _ in candidates]
+            passages = [{"id": i, "text": c.text} for i, (c, _) in enumerate(candidates)]
             req = RerankRequest(query=query, passages=passages)
             ranked = self._flashrank_client.rerank(req)
-            id_to_chunk = {c.id: c for c, _ in candidates}
             output = []
             for r in ranked[:top_n]:
-                chunk = id_to_chunk[r["id"]]
-                output.append((chunk, float(r["score"])))
+                idx = int(r["id"])
+                chunk, base_score = candidates[idx]
+                output.append((chunk, base_score))
             return output
 
         # Built-in semantic cross-scoring:

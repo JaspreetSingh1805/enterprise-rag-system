@@ -12,7 +12,7 @@
 >  
 > *Unlike rigid prototype RAG scripts, every stage in this system is modular, containerized, and dynamically configurable by an administrator via versioned REST APIs without code changes or container rebuilds. It features multi-format ingestion (PDF, DOCX, TXT, MD) with background jobs and SHA-256 deduplication, multi-tenant knowledge base isolation, two distinct chunking strategies with documented trade-offs, provider adapters for LLMs and embeddings, hybrid vector + BM25 search with Reciprocal Rank Fusion, cross-encoder reranking, and a strict grounding gate that prevents hallucinations and explicitly says **'I could not find information about this in the knowledge base'** when data is missing.*  
 >  
-> *It boots in a single Docker Compose command, passes 34 automated tests in CI/CD, and includes a 12-question benchmark proving an MRR improvement from 0.54 to 1.0 across configurations."*
+> *It boots in a single Docker Compose command, passes 35 automated tests in CI/CD (79% coverage), and includes a 26-question gold standard benchmark with real FastEmbed embeddings and FlashRank cross-encoder reranking, driving MRR from 0.9352 to 0.9722 and Recall@1 from 88.9% to 94.4%."*
 
 ---
 
@@ -201,7 +201,7 @@ curl -s http://localhost:8080/api/v1/health
 ### Act 5: Evaluation Benchmark & CI/CD (Minute 10 – 12)
 
 **What to Say**:
-> *"To rigorously prove retrieval quality, I built an automated evaluation suite testing 12 representative questions across Config A (Baseline Vector) and Config B (Enhanced Hybrid + Reranking)."*
+> *"To rigorously prove retrieval quality, I built an automated evaluation suite testing 26 realistic questions (18 domain-specific answerable questions across PDF, DOCX, TXT, MD, plus 8 out-of-scope unanswerables) across Config A (Baseline Vector) and Config B (Enhanced Hybrid + Reranking) using real local FastEmbed embeddings and FlashRank cross-encoder reranking."*
 
 **What to Run**:
 - In **Git Bash**:
@@ -215,16 +215,21 @@ curl -s http://localhost:8080/api/v1/health
 
 **Show the Interviewer the Comparison Matrix**:
 
-| Evaluation Metric | Config A (Baseline: Vector-Only) | Config B (Enhanced: Hybrid + Rerank) | Improvement |
+| Evaluation Metric | Config A (Baseline: Vector-Only) | Config B (Enhanced: Hybrid + Rerank) | Gain / Improvement |
 |:---|:---:|:---:|:---:|
-| **Mean Reciprocal Rank (MRR)** | **0.5417** | **1.0000** | **+0.4583 (+84.6%)** |
-| **Citation Accuracy** | **75.0%** | **100.0%** | **+25.0%** |
-| **Grounding Score** | **91.7%** | **91.7%** | **Parity** |
-| **Unanswerable Rejection Rate** | **100.0%** | **100.0%** | **100% Precision** |
-| **Latency (p50)** | **3.79 ms** | **5.13 ms** | **+1.34 ms (Sub-10ms)** |
+| **Mean Reciprocal Rank (MRR)** | **0.9352** | **0.9722** | **+0.0370 (+4.0%)** |
+| **Recall@1** | **88.9%** | **94.4%** | **+5.5%** |
+| **Recall@3** | **100.0%** | **100.0%** | **+0.0%** |
+| **Recall@5** | **100.0%** | **100.0%** | **+0.0%** |
+| **Citation Accuracy** | **100.0%** | **100.0%** | **+0.0%** |
+| **Grounding Score** | **100.0%** | **100.0%** | **+0.0%** |
+| **Unanswerable Rejection Rate** | **100.0%** | **100.0%** | **100% Precision (Zero Hallucinations)** |
+| **Latency (p50)** | **9.47 ms** | **38.89 ms** | **+29.42 ms** |
+| **Latency (p95)** | **12.50 ms** | **57.61 ms** | **+45.11 ms** |
+| **Average Tokens / Query** | **241.3** | **444.1** | **+202.8 tokens** |
 
 **Key Talking Point**:
-> *"Config B achieved a perfect MRR of 1.0000 and 100% citation accuracy because the hybrid BM25 + dense vector search combined with structure-aware chunking correctly prioritized exact keyword phrases while maintaining section context."*
+> *"Config B achieved an MRR of 0.9722 and Recall@1 of 94.4% because the hybrid BM25 + dense vector search combined with FlashRank cross-encoder reranking correctly prioritized exact alphanumeric keywords (e.g., HTTP 429, $110 per diem, RS256) while maintaining hierarchical section context. Both configurations achieved 100% unanswerable rejection accuracy on out-of-scope queries."*
 
 ---
 
@@ -277,14 +282,14 @@ curl -s http://localhost:8080/api/v1/health
 > *"We use a two-layer defense:  
 > 1. **Similarity Gate**: Before calling the LLM, we check the maximum similarity score of retrieved chunks. If `max_score < similarity_threshold`, the query is flagged as unanswerable immediately, saving LLM tokens and latency.  
 > 2. **Strict System Prompt & Extraction**: The system prompt enforces strict grounding: 'Base your answer ONLY on provided context. If context is insufficient, state: I could not find information about this in the knowledge base.'  
-> In our 12-question benchmark, all 4 unanswerable questions achieved a 100% rejection rate with zero false claims."*
+> In our 26-question gold standard benchmark, all 8 out-of-scope unanswerable questions achieved a 100% rejection rate with zero false claims."*
 
 ---
 
 ### Q7: "What happens when an admin switches from a 384-dim embedding model to a 1536-dim model?"
 > **Answer**:  
 > *"Vector stores fail with dimension mismatch errors if you attempt to insert or search vectors with differing dimensions.  
-> Our `safe_reindex_knowledge_base` method detects this change. It queries all raw chunks previously stored in SQLite for that KB, drops the old vector collection in Qdrant, creates a new collection with the new dimension, batches the text through the new embedding adapter, and upserts the new vectors. This ensures zero document loss during model migration."*
+> We expose an operational endpoint `POST /api/v1/knowledge-bases/{kb_id}/reindex` which accepts an optional target embedding model and dimension. It submits a `knowledge_base_reindex` job to our asynchronous `BackgroundJobQueue`. The worker safely drops the old vector collection in Qdrant, creates a new collection with the target dimension, re-embeds all existing documents from raw chunks stored in SQLite, and updates the knowledge base metadata with live progress tracking (0% -> 25% -> 100%) and zero data loss."*
 
 ---
 
@@ -292,10 +297,10 @@ curl -s http://localhost:8080/api/v1/health
 > **Answer**:  
 > *"Our GitHub Actions pipeline (`.github/workflows/ci.yml`) runs on every push and pull request. It executes:  
 > 1. Code quality & linting via `ruff`  
-> 2. 34 unit, integration, and API tests via `pytest` with coverage report generation (79% coverage)  
-> 3. The 12-question evaluation benchmark (`eval/evaluate.py`)  
+> 2. 35 unit, integration, and API tests via `pytest` with coverage report generation (79% coverage)  
+> 3. The 26-question evaluation benchmark (`eval/evaluate.py`) using real local neural FastEmbed and FlashRank models  
 > 4. A Docker container build and healthcheck verification step  
-> A PR cannot be merged unless all tests and Docker packaging pass."*
+> A PR cannot be merged unless all tests, evaluations, and Docker packaging pass."*
 
 ---
 

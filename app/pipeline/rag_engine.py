@@ -2,6 +2,7 @@ import time
 from typing import Any, Optional
 
 from app.adapters.embeddings.base import BaseEmbeddingAdapter
+from app.adapters.factory import AdapterRegistry
 from app.adapters.llm.base import BaseLLMAdapter
 from app.adapters.vector_store.base import BaseVectorStoreAdapter
 from app.core.exceptions import EmbeddingModelMismatchError, KnowledgeBaseNotFoundError
@@ -32,16 +33,18 @@ class RAGEngine:
     def __init__(
         self,
         metadata_store: MetadataStore,
-        llm_adapter: BaseLLMAdapter,
-        embedding_adapter: BaseEmbeddingAdapter,
-        vector_adapter: BaseVectorStoreAdapter,
+        llm_adapter: Optional[BaseLLMAdapter] = None,
+        embedding_adapter: Optional[BaseEmbeddingAdapter] = None,
+        vector_adapter: Optional[BaseVectorStoreAdapter] = None,
+        reranker: Optional[Reranker] = None,
+        adapter_registry: Optional[AdapterRegistry] = None,
     ):
         self.store = metadata_store
-        self.llm_adapter = llm_adapter
-        self.embedding_adapter = embedding_adapter
+        self._default_llm_adapter = llm_adapter
+        self._default_embedding_adapter = embedding_adapter
         self.vector_adapter = vector_adapter
-        self.query_rewriter = QueryRewriter(llm_adapter)
-        self.reranker = Reranker()
+        self.reranker = reranker or Reranker()
+        self.adapter_registry = adapter_registry or AdapterRegistry()
 
     async def execute_query(
         self,
@@ -60,44 +63,60 @@ class RAGEngine:
 
         logger.info(f"Executing query for KB '{kb_id}' using config {config.version}")
 
-        # 2. Validate KB Existence & Embedding Dimension
+        # 2. Validate KB Existence
         kb = self.store.get_kb(kb_id)
         if not kb:
             raise KnowledgeBaseNotFoundError(kb_id)
 
+        # 3. Dynamically resolve LLM and Embedding adapters based on runtime config
+        llm_adapter = (
+            self._default_llm_adapter
+            if self._default_llm_adapter is not None
+            else self.adapter_registry.get_llm_adapter(config.llm)
+        )
+        embedding_adapter = (
+            self._default_embedding_adapter
+            if self._default_embedding_adapter is not None
+            else self.adapter_registry.get_embedding_adapter_for_kb(kb)
+        )
+
         # Check embedding compatibility
-        if kb.embedding_dimension != self.embedding_adapter.dimension:
+        if kb.embedding_dimension != embedding_adapter.dimension:
             raise EmbeddingModelMismatchError(
                 expected_model=kb.embedding_model,
                 expected_dim=kb.embedding_dimension,
-                actual_model=self.embedding_adapter.model_name,
-                actual_dim=self.embedding_adapter.dimension,
+                actual_model=embedding_adapter.model_name,
+                actual_dim=embedding_adapter.dimension,
             )
 
-        # 3. Stage: Query Rewrite (Optional)
+        # 4. Stage: Query Rewrite (Optional)
         search_query = question
         rewrite_duration = 0.0
         if config.llm.query_rewrite_enabled:
             rw_start = time.perf_counter()
-            search_query = await self.query_rewriter.rewrite(
-                question, config.llm.query_rewrite_prompt
-            )
+            query_rewriter = QueryRewriter(llm_adapter)
+            search_query = await query_rewriter.rewrite(question, config.llm.query_rewrite_prompt)
             rewrite_duration = (time.perf_counter() - rw_start) * 1000
             stages.append(
                 ExecutionStageTrace(
                     stage_name="query_rewrite",
                     duration_ms=round(rewrite_duration, 2),
-                    details={"original_query": question, "rewritten_query": search_query},
+                    details={
+                        "original_query": question,
+                        "rewritten_query": search_query,
+                        "llm_provider": llm_adapter.provider_name,
+                        "llm_model": llm_adapter.model_name,
+                    },
                 )
             )
 
-        # 4. Stage: Retrieval (Vector / Keyword / Hybrid)
+        # 5. Stage: Retrieval (Vector / Keyword / Hybrid)
         retrieval_start = time.perf_counter()
         candidates: list[tuple[Chunk, float]] = []
         mode = config.retrieval.search_mode
 
         if mode in (SearchMode.VECTOR, SearchMode.HYBRID):
-            query_vector = await self.embedding_adapter.embed_query(search_query)
+            query_vector = await embedding_adapter.embed_query(search_query)
             vector_results = await self.vector_adapter.search(
                 kb_id=kb_id,
                 query_vector=query_vector,
@@ -170,20 +189,20 @@ class RAGEngine:
             similarity_threshold=config.retrieval.similarity_threshold
         )
 
-        top_score = final_chunks[0][1] if final_chunks else 0.0
+        retrieval_top_score = candidates[0][1] if candidates else 0.0
 
         # Confidence gate: if below similarity threshold, reject immediately
-        if not final_chunks or top_score < config.retrieval.similarity_threshold:
+        if not candidates or retrieval_top_score < config.retrieval.similarity_threshold:
             logger.info(
                 f"Query '{question}' rejected by similarity threshold "
-                f"({top_score:.3f} < {config.retrieval.similarity_threshold})"
+                f"({retrieval_top_score:.3f} < {config.retrieval.similarity_threshold})"
             )
             grounding_duration = (time.perf_counter() - grounding_start) * 1000
             stages.append(
                 ExecutionStageTrace(
                     stage_name="generation",
                     duration_ms=round(grounding_duration, 2),
-                    details={"rejected_by_threshold": True, "top_score": top_score},
+                    details={"rejected_by_threshold": True, "top_score": retrieval_top_score},
                 )
             )
 
@@ -210,7 +229,7 @@ class RAGEngine:
         formatted_context = grounding_engine.format_context(final_chunks)
         llm_prompt = f"Context:\n{formatted_context}\n\nQuestion: {question}\n\nAnswer:"
 
-        llm_res = await self.llm_adapter.generate(
+        llm_res = await llm_adapter.generate(
             prompt=llm_prompt,
             system_prompt=config.llm.system_prompt,
             temperature=config.llm.temperature,
@@ -230,6 +249,8 @@ class RAGEngine:
                     "is_found": is_found,
                     "prompt_tokens": llm_res.prompt_tokens,
                     "completion_tokens": llm_res.completion_tokens,
+                    "llm_provider": llm_adapter.provider_name,
+                    "llm_model": llm_adapter.model_name,
                 },
             )
         )

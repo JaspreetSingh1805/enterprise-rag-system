@@ -25,12 +25,16 @@ class OpenAIAdapter(BaseLLMAdapter):
     ):
         self.api_key = api_key or ""
         self.base_url = base_url.rstrip("/")
-        self.model_name = model_name
+        self._model_name = model_name
         self.max_retries = max_retries
 
     @property
     def provider_name(self) -> str:
         return "openai"
+
+    @property
+    def model_name(self) -> str:
+        return self._model_name
 
     async def generate(
         self,

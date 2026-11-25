@@ -22,13 +22,23 @@ class LocalEmbeddingAdapter(BaseEmbeddingAdapter):
         self._fastembed_model = None
         self._sentence_transformer = None
 
+        # Map common names to FastEmbed registry identifiers
+        fe_name = self._model_name
+        if "minilm" in self._model_name.lower():
+            fe_name = "sentence-transformers/all-MiniLM-L6-v2"
+        elif "bge-small" in self._model_name.lower():
+            fe_name = "BAAI/bge-small-en-v1.5"
+
         # Attempt to load FastEmbed or SentenceTransformers if present
         try:
             from fastembed import TextEmbedding
 
-            self._fastembed_model = TextEmbedding(model_name=self._model_name)
-            logger.info(f"Loaded FastEmbed local model: {self._model_name}")
-        except Exception:
+            self._fastembed_model = TextEmbedding(model_name=fe_name)
+            logger.info(f"Loaded FastEmbed local model: {fe_name} (dim={self._dimension})")
+        except Exception as e:
+            logger.debug(
+                f"FastEmbed load error: {e}; falling back to SentenceTransformers or built-in"
+            )
             try:
                 from sentence_transformers import SentenceTransformer
 

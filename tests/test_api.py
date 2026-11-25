@@ -114,3 +114,36 @@ def test_api_document_upload_and_query_flow(client):
     assert "trace" in q_data
     assert q_data["trace"]["total_latency_ms"] >= 0
     assert "config_version" in q_data
+
+
+def test_api_reindex_knowledge_base(client):
+    # Create KB and document
+    kb_id = "test_reindex_api"
+    client.post(
+        "/api/v1/knowledge-bases/",
+        json={"id": kb_id, "name": "Reindex Test", "description": "Testing reindex endpoint"},
+    )
+    client.post(
+        "/api/v1/documents/upload",
+        data={"knowledge_base_id": kb_id},
+        files={
+            "file": (
+                "reindex_doc.txt",
+                io.BytesIO(b"Document content for reindexing test"),
+                "text/plain",
+            )
+        },
+    )
+    time.sleep(0.1)
+
+    # Call reindex endpoint (HTTP 202 Accepted)
+    reindex_res = client.post(
+        f"/api/v1/knowledge-bases/{kb_id}/reindex",
+        json={"embedding_model": "mock-test", "embedding_dimension": 384},
+    )
+    assert reindex_res.status_code == 202
+    data = reindex_res.json()
+    assert data["job"]["status"] in ("queued", "completed", "running")
+    assert "id" in data["job"]
+    assert data["target_embedding_model"] == "mock-test"
+    assert data["target_embedding_dimension"] == 384

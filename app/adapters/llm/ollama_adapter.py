@@ -20,12 +20,16 @@ class OllamaAdapter(BaseLLMAdapter):
         max_retries: int = 3,
     ):
         self.base_url = base_url.rstrip("/")
-        self.model_name = model_name
+        self._model_name = model_name
         self.max_retries = max_retries
 
     @property
     def provider_name(self) -> str:
         return "ollama"
+
+    @property
+    def model_name(self) -> str:
+        return self._model_name
 
     async def generate(
         self,

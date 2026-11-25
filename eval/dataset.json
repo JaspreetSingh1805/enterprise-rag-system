@@ -1,84 +1,182 @@
 [
   {
-    "id": "q1",
+    "id": "q01",
     "question": "How many days of paid annual leave are permanent employees entitled to, and what is the carry-over limit?",
     "is_answerable": true,
     "expected_doc_name": "hr_leave_policy.md",
     "ground_truth_keywords": ["25", "annual leave", "5", "march 31st"]
   },
   {
-    "id": "q2",
+    "id": "q02",
     "question": "Under what condition is a medical certificate required when taking sick leave?",
     "is_answerable": true,
     "expected_doc_name": "hr_leave_policy.md",
     "ground_truth_keywords": ["consecutive", "2", "business days", "medical certificate"]
   },
   {
-    "id": "q3",
-    "question": "What is the minimum password length and how often must corporate passwords be changed?",
+    "id": "q03",
+    "question": "How many weeks of fully paid parental leave are primary and secondary caregivers granted?",
+    "is_answerable": true,
+    "expected_doc_name": "hr_leave_policy.md",
+    "ground_truth_keywords": ["16 weeks", "primary", "4 weeks", "secondary", "parental"]
+  },
+  {
+    "id": "q04",
+    "question": "How much bereavement leave is permitted for immediate family members versus extended family?",
+    "is_answerable": true,
+    "expected_doc_name": "hr_leave_policy.md",
+    "ground_truth_keywords": ["5", "days", "immediate", "3", "extended"]
+  },
+  {
+    "id": "q05",
+    "question": "What is the minimum tenure required before an employee can request an unpaid sabbatical leave, and what is the maximum duration?",
+    "is_answerable": true,
+    "expected_doc_name": "hr_leave_policy.md",
+    "ground_truth_keywords": ["3 years", "sabbatical", "6 months"]
+  },
+  {
+    "id": "q06",
+    "question": "What is the minimum corporate password length and how often must passwords be changed?",
     "is_answerable": true,
     "expected_doc_name": "security_guidelines.txt",
     "ground_truth_keywords": ["14", "characters", "90 days"]
   },
   {
-    "id": "q4",
-    "question": "Within what timeframe must a suspected security incident be reported to the SOC?",
+    "id": "q07",
+    "question": "Within what timeframe must a suspected security incident be reported to the SOC, and what is the hotline number?",
     "is_answerable": true,
     "expected_doc_name": "security_guidelines.txt",
-    "ground_truth_keywords": ["60 minutes", "soc", "security operations center"]
+    "ground_truth_keywords": ["60 minutes", "soc", "555-0199"]
   },
   {
-    "id": "q5",
-    "question": "What is the daily meal per diem for employees traveling on business in domestic cities versus international metros?",
+    "id": "q08",
+    "question": "Which multi-factor authentication methods are approved, and which method is strictly forbidden?",
     "is_answerable": true,
-    "expected_doc_name": "employee_handbook.docx",
-    "ground_truth_keywords": ["$75", "$110", "per diem", "domestic"]
+    "expected_doc_name": "security_guidelines.txt",
+    "ground_truth_keywords": ["fido2", "webauthn", "sms", "forbidden"]
   },
   {
-    "id": "q6",
+    "id": "q09",
+    "question": "What full-disk encryption mechanisms are required on corporate Windows and macOS laptops?",
+    "is_answerable": true,
+    "expected_doc_name": "security_guidelines.txt",
+    "ground_truth_keywords": ["bitlocker", "filevault", "aes-256"]
+  },
+  {
+    "id": "q10",
+    "question": "What VPN protocol is required for remote network access, and is split-tunneling permitted?",
+    "is_answerable": true,
+    "expected_doc_name": "security_guidelines.txt",
+    "ground_truth_keywords": ["wireguard", "vpn", "split-tunneling", "prohibited"]
+  },
+  {
+    "id": "q11",
+    "question": "What are the four data classification levels defined in the corporate information security policy?",
+    "is_answerable": true,
+    "expected_doc_name": "security_guidelines.txt",
+    "ground_truth_keywords": ["public", "internal", "confidential", "restricted"]
+  },
+  {
+    "id": "q12",
     "question": "What are the core reachable hours for team members in standard operations?",
     "is_answerable": true,
     "expected_doc_name": "employee_handbook.docx",
     "ground_truth_keywords": ["10:00 AM", "3:30 PM", "core hours"]
   },
   {
-    "id": "q7",
+    "id": "q13",
+    "question": "What is the daily meal per diem for employees traveling on business in domestic cities versus international metros?",
+    "is_answerable": true,
+    "expected_doc_name": "employee_handbook.docx",
+    "ground_truth_keywords": ["$75", "$110", "per diem", "domestic"]
+  },
+  {
+    "id": "q14",
+    "question": "What is the maximum nightly hotel expense limit allowed for domestic travel?",
+    "is_answerable": true,
+    "expected_doc_name": "employee_handbook.docx",
+    "ground_truth_keywords": ["$250", "night", "hotel"]
+  },
+  {
+    "id": "q15",
+    "question": "What is the annual learning and professional development stipend allocated per employee?",
+    "is_answerable": true,
+    "expected_doc_name": "employee_handbook.docx",
+    "ground_truth_keywords": ["$1,500", "stipend", "learning", "development"]
+  },
+  {
+    "id": "q16",
     "question": "What is the expiration time for API JWT tokens and when are payment authorizations settled?",
     "is_answerable": true,
     "expected_doc_name": "product_workflow_api.pdf",
     "ground_truth_keywords": ["3600 seconds", "1 hour", "23:59 UTC", "settlement"]
   },
   {
-    "id": "q8",
+    "id": "q17",
     "question": "What is the standard API rate limit per minute and what status code indicates throttling?",
     "is_answerable": true,
     "expected_doc_name": "product_workflow_api.pdf",
     "ground_truth_keywords": ["1200", "requests per minute", "429"]
   },
   {
-    "id": "q9",
+    "id": "q18",
+    "question": "How are outbound webhooks secured and what signature header is included in webhook requests?",
+    "is_answerable": true,
+    "expected_doc_name": "product_workflow_api.pdf",
+    "ground_truth_keywords": ["hmac-sha256", "x-webhook-signature"]
+  },
+  {
+    "id": "q19",
     "question": "What was the total landing payload weight of the NASA Curiosity Mars rover mission?",
     "is_answerable": false,
     "expected_doc_name": null,
     "ground_truth_keywords": []
   },
   {
-    "id": "q10",
-    "question": "What are the internal discount rates and pricing tiers offered by our top competitor Stripe?",
+    "id": "q20",
+    "question": "What are the commercial subscription pricing tiers for Stripe Terminal card readers?",
     "is_answerable": false,
     "expected_doc_name": null,
     "ground_truth_keywords": []
   },
   {
-    "id": "q11",
-    "question": "What is the secret recipe and baking temperature for grandmother's chocolate fudge cake?",
+    "id": "q21",
+    "question": "What is the current market capitalization and share price of Apple Inc on NASDAQ?",
     "is_answerable": false,
     "expected_doc_name": null,
     "ground_truth_keywords": []
   },
   {
-    "id": "q12",
-    "question": "What is the current stock price and dividend yield of Apple Inc on the NASDAQ exchange?",
+    "id": "q22",
+    "question": "What is the company 401(k) employer matching percentage and vesting period?",
+    "is_answerable": false,
+    "expected_doc_name": null,
+    "ground_truth_keywords": []
+  },
+  {
+    "id": "q23",
+    "question": "What is the recommended pediatric dosage for amoxicillin suspension in milligrams per kilogram?",
+    "is_answerable": false,
+    "expected_doc_name": null,
+    "ground_truth_keywords": []
+  },
+  {
+    "id": "q24",
+    "question": "What will be the weather forecast, temperature, and precipitation in Tokyo this coming Saturday?",
+    "is_answerable": false,
+    "expected_doc_name": null,
+    "ground_truth_keywords": []
+  },
+  {
+    "id": "q25",
+    "question": "What are the official pitch distance and base path dimensions in Major League Baseball regulation fields?",
+    "is_answerable": false,
+    "expected_doc_name": null,
+    "ground_truth_keywords": []
+  },
+  {
+    "id": "q26",
+    "question": "What is the maximum quantum coherence time achieved by superconducting transmon qubits at 300 Kelvin?",
     "is_answerable": false,
     "expected_doc_name": null,
     "ground_truth_keywords": []

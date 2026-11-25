@@ -2,6 +2,7 @@ import uuid
 from typing import Any, Optional
 
 from app.adapters.embeddings.base import BaseEmbeddingAdapter
+from app.adapters.factory import AdapterRegistry
 from app.adapters.vector_store.base import BaseVectorStoreAdapter
 from app.core.exceptions import (
     DuplicateFileError,
@@ -41,12 +42,14 @@ class IngestionPipeline:
     def __init__(
         self,
         metadata_store: MetadataStore,
-        embedding_adapter: BaseEmbeddingAdapter,
-        vector_adapter: BaseVectorStoreAdapter,
+        embedding_adapter: Optional[BaseEmbeddingAdapter] = None,
+        vector_adapter: Optional[BaseVectorStoreAdapter] = None,
+        adapter_registry: Optional[AdapterRegistry] = None,
     ):
         self.store = metadata_store
-        self.embedding_adapter = embedding_adapter
+        self._default_embedding_adapter = embedding_adapter
         self.vector_adapter = vector_adapter
+        self.adapter_registry = adapter_registry or AdapterRegistry()
 
     async def ingest_file(
         self,
@@ -64,6 +67,13 @@ class IngestionPipeline:
             config = self.store.get_active_config()
 
         logger.info(f"Ingesting file '{filename}' into KB '{kb_id}' using config {config.version}")
+
+        # Resolve embedding adapter for this Knowledge Base
+        embedding_adapter = (
+            self._default_embedding_adapter
+            if self._default_embedding_adapter is not None
+            else self.adapter_registry.get_embedding_adapter_for_kb(kb)
+        )
 
         # 1. Validation & Deduplication Check
         content_hash = validate_file_bytes(
@@ -108,7 +118,7 @@ class IngestionPipeline:
 
         # 4. Generate Embeddings
         chunk_texts = [c.text for c in chunks]
-        embeddings = await self.embedding_adapter.embed_documents(chunk_texts)
+        embeddings = await embedding_adapter.embed_documents(chunk_texts)
         for c, emb in zip(chunks, embeddings):
             c.embedding = emb
 

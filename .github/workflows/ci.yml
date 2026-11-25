@@ -39,7 +39,7 @@ jobs:
         run: |
           pytest --cov=app --cov-report=term-missing --cov-report=xml
 
-      - name: Run 12-Question RAG Evaluation Benchmark
+      - name: Run 26-Question RAG Evaluation Benchmark
         run: |
           python eval/evaluate.py
 

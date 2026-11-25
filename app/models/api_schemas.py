@@ -42,6 +42,29 @@ class KnowledgeBaseListResponse(BaseModel):
     total: int
 
 
+class ReindexKnowledgeBaseRequest(BaseModel):
+    embedding_provider: Optional[str] = Field(
+        default=None,
+        description="Optional new embedding provider ('local', 'openai', 'mock'). Defaults to active config.",
+    )
+    embedding_model: Optional[str] = Field(
+        default=None,
+        description="Optional new embedding model name (e.g. 'all-MiniLM-L6-v2', 'text-embedding-3-small').",
+    )
+    embedding_dimension: Optional[int] = Field(
+        default=None,
+        description="Dimension matching the new embedding model (e.g. 384, 1536).",
+    )
+
+
+class ReindexKnowledgeBaseResponse(BaseModel):
+    job: Job
+    knowledge_base_id: str
+    target_embedding_model: str
+    target_embedding_dimension: int
+    message: str
+
+
 # ==============================================================================
 # Document Schemas
 # ==============================================================================

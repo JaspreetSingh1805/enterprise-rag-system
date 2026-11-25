@@ -20,7 +20,7 @@ FROM python:3.11-slim AS runtime
 WORKDIR /app
 
 # Create non-root system user
-RUN groupadd -r appgroup && useradd -r -g appgroup -d /app appuser \
+RUN groupadd -r appgroup && useradd -r -m -g appgroup -d /home/appuser appuser \
     && apt-get update && apt-get install -y --no-install-recommends \
     curl \
     && rm -rf /var/lib/apt/lists/*
@@ -28,7 +28,7 @@ RUN groupadd -r appgroup && useradd -r -g appgroup -d /app appuser \
 COPY --from=builder /install /usr/local
 COPY . /app
 
-RUN mkdir -p /app/data && chown -R appuser:appgroup /app
+RUN mkdir -p /app/data /home/appuser/.cache && chown -R appuser:appgroup /app /home/appuser
 
 USER appuser
 

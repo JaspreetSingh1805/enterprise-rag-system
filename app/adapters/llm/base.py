@@ -22,6 +22,12 @@ class BaseLLMAdapter(ABC):
         """Name of the provider (e.g. 'openai', 'ollama', 'mock')."""
         pass
 
+    @property
+    @abstractmethod
+    def model_name(self) -> str:
+        """Name of the underlying model (e.g. 'gpt-4o-mini', 'llama3.2', 'mock-gpt-4o')."""
+        pass
+
     @abstractmethod
     async def generate(
         self,
