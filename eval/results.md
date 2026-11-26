@@ -32,8 +32,8 @@ Evaluated using **real local neural embeddings** (`FastEmbed / all-MiniLM-L6-v2`
 | **Citation Accuracy** | **100.0%** | **100.0%** | **+0.0%** |
 | **Grounding Score** | **100.0%** | **100.0%** | **+0.0%** |
 | **Unanswerable Rejection Rate** | **100.0%** | **100.0%** | **100% Precision (Zero Hallucinations)** |
-| **Latency (p50)** | **13.37 ms** | **61.16 ms** | **+47.79 ms** |
-| **Latency (p95)** | **15.99 ms** | **136.61 ms** | **+120.62 ms** |
+| **Latency (p50)** | **13.39 ms** | **89.29 ms** | **+75.90 ms** |
+| **Latency (p95)** | **21.23 ms** | **143.35 ms** | **+122.12 ms** |
 | **Average Tokens / Query** | **241.3** | **444.1** | **+202.8 tokens** |
 
 ---
